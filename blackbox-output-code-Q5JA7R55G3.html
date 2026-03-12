@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulAwareness | Mental Health Resources</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #2E8B57; /* Sea Green for Calm */
+            --secondary-color: #F0F8FF; /* Alice Blue */
+            --text-color: #333333;
+            --bg-color: #ffffff;
+            --accent-color: #FF7F50; /* Coral for Alerts */
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(135deg, #e0f2f1 0%, #ffffff 100%);
+            padding: 4rem 5%;
+            text-align: center;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #1e5c39;
+        }
+
+        /* --- DISCLAIMER --- */
+        .disclaimer {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #ffeeba;
+        }
+
+        /* --- CONTENT SECTIONS --- */
+        .container {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .card a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #333;
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* --- COOKIE BANNER --- */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--white);
+            padding: 1.5rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            border-top: 4px solid var(--primary-color);
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #cookie-banner.show {
+            transform: translateY(0);
+        }
+
+        .cookie-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .cookie-text {
+            font-size: 0.9rem;
+            margin-right: 20px;
+        }
+
+        .cookie-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: var(--overlay-bg); 
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 800px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .policy-text h2 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .policy-text p { margin-bottom: 1rem; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .cookie-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .cookie-text {
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Emergency Disclaimer -->
+    <div class="disclaimer">
+        <strong>Emergency:</strong> If you are in immediate danger, please call your local emergency number (e.g., 911) or the 988 Suicide & Crisis Lifeline immediately. This website is for informational purposes only.
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">MindfulAwareness</a>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Support & Awareness</h1>
+        <p>Connecting you with professional resources, crisis support, and community tools for better mental health.</p>
+        <a href="#resources" class="btn">Explore Resources</a>
+    </section>
+
+    <!-- Content Section -->
+    <section id="resources" class="container">
+        <div class="grid">
+            <div class="card">
+                <h3>Crisis Support</h3>
+                <p>Immediate help is available 24/7. Click below to connect with trained counselors.</p>
+                <br>
+                <a href="https://988lifeline.org/" target="_blank" rel="noopener noreferrer">988 Lifeline</a> | 
+                <a href="https://www.crisistextline.org/" target="_blank" rel="noopener noreferrer">Crisis Text Line</a>
+            </div>
+            <div class="card">
+                <h3>Find a Therapist</h3>
+                <p>Search for licensed professionals in your area who specialize in your specific needs.</p>
+                <br>
+                <a href="https://www.psychologytoday.com/us/therapists" target="_blank" rel="noopener noreferrer">Psychology Today Directory</a>
+            </div>
+            <div class="card">
+                <h3>Education & Advocacy</h3>
+                <p>Learn about mental health conditions, stigma reduction, and advocacy groups.</p>
+                <br>
+                <a href="https://www.nami.org/" target="_blank" rel="noopener noreferrer">NAMI</a> | 
+                <a href="https://www.mhanational.org/" target="_blank" rel="noopener noreferrer">Mental Health America</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 MindfulAwareness. All rights reserved.</p>
+        <div class="footer-links">
+            <a onclick="openModal('privacyModal')">Privacy Policy</a>
+            <a onclick="openModal('cookieModal')">Cookie Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                We use cookies to ensure you get the best experience on our website. By continuing to use this site, you agree to our use of cookies.
+            </div>
+            <button class="cookie-btn" onclick="acceptCookies()">Accept</button>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content policy-text">
+            <span class="close" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p><strong>Last Updated: October 2023</strong></p>
+            <p>At MindfulAwareness, we prioritize your privacy. This policy outlines how we handle your data.</p>
+            <h3>1. Information Collection</h3>
+            <p>We do not collect sensitive medical data on this website. We only collect basic information such as your name and email address if you choose to subscribe to our newsletter.</p>
+            <h3>2. Use of Information</h3>
+            <p>Your information is used solely to send you updates and resources related to mental health. We never sell your data to third parties.</p>
+            <h3>3. Cookies</h3>
+            <p>We use cookies to improve user experience and analyze site traffic. You can control cookie settings in your browser.</p>
+            <h3>4. Security</h3>
+            <p>We implement reasonable security measures to protect your information.</p>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal -->
+    <div id="cookieModal" class="modal">
+        <div class="modal-content policy-text">
+            <span class="close" onclick="closeModal('cookieModal')">&times;</span>
+            <h2>Cookie Policy</h2>
+            <p><strong>Last Updated: October 2023</strong></p>
+            <p>This Cookie Policy explains what cookies are and how we use them.</p>
+            <h3>What are Cookies?</h3>
+            <p>Cookies are small text files that are sent to your web browser and stored on your device.</p>
+            <h3>How We Use Cookies</h3>
+            <ul>
+                <li><strong>Essential Cookies:</strong> Necessary for the website to function properly.</li>
+                <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with the website.</li>
+            </ul>
+            <h3>Managing Cookies</h3>
+            <p>You can set your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Cookie Banner Logic
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if user has already accepted cookies
+            if (!localStorage.getItem("cookiesAccepted")) {
+                // Show banner after a short delay
+                setTimeout(function() {
+                    document.getElementById("cookie-banner").classList.add("show");
+                }, 1000);
+            }
+        });
+
+        function acceptCookies() {
+            localStorage.setItem("cookiesAccepted", "true");
+            document.getElementById("cookie-banner").classList.remove("show");
+        }
+
+        // Modal Logic
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
